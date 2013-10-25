@@ -1,19 +1,12 @@
-class Contact
-	attr_accessor :id, :first_name, :last_name, :email, :note
-
-	def initialize(first_name, last_name, email, note)
-		#@id = id
-		@first_name = first_name
-		@last_name = last_name
-		@email = email
-		@note = note
-	end
-
-end
+require_relative "contact"
+require_relative "rolodex"
 
 class CRA
 	def initialize
 		puts "\nWelcome to your CRM!".upcase
+		print "Please enter a name for your contact book: "
+		name = gets.chomps
+		@contact_book = Rolodex.new(name)
 	end
 
 	def main_menu
@@ -54,6 +47,8 @@ class CRA
 			puts "\nInvalid selection. Here are your options:"
 		end
  	end
+	
+end
 
  	def add_contact
  		print "First name: "
@@ -66,7 +61,7 @@ class CRA
  		note = gets.chomp
 
  		contact = Contact.new(first_name, last_name, email, note)
- 		#Rolodex.add_contact(contact)
+ 		@contact_book.add_contact_to_book(contact)
  	end
 end
 
