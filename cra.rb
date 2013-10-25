@@ -1,4 +1,21 @@
+class Contact
+	attr_accessor :id, :first_name, :last_name, :email, :note
+
+	def initialize(first_name, last_name, email, note)
+		#@id = id
+		@first_name = first_name
+		@last_name = last_name
+		@email = email
+		@note = note
+	end
+
+end
+
 class CRA
+	def initialize
+		puts "\nWelcome to your CRM!".upcase
+	end
+
 	def main_menu
 		selection = 1
 		while selection != 6
@@ -9,7 +26,7 @@ class CRA
 	end
 
 	def print_main_menu
-		puts "Please select one of the following options:"
+		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Modify an existing contact"
 	  puts "[3] Delete a contact"
@@ -36,8 +53,21 @@ class CRA
 		else
 			puts "\nInvalid selection. Here are your options:"
 		end
+ 	end
 
-	end
+ 	def add_contact
+ 		print "First name: "
+ 		first_name = gets.chomp
+ 		print "Last name: "
+ 		last_name = gets.chomp
+ 		print "Email: "
+ 		email = gets.chomp
+ 		print "Note: "
+ 		note = gets.chomp
+
+ 		contact = Contact.new(first_name, last_name, email, note)
+ 		#Rolodex.add_contact(contact)
+ 	end
 end
 
 CRA.new.main_menu
