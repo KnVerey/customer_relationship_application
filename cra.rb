@@ -13,61 +13,35 @@ class CRA
 
 	def self.main_menu
 		selection = 1
-		while selection != 6
+		while selection != 4
 			print_main_menu
 			selection = gets.chomp.to_i
-			run_option(selection)
+			execute_selection(selection)
 		end
 	end
 
 	def self.print_main_menu
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
-	  puts "[2] Modify an existing contact"
-	  puts "[3] Delete a contact"
-	  puts "[4] Display all the contacts"
-	  puts "[5] Display an attribute" 
-	  puts "[6] Exit"
+	  puts "[2] Find an existing contact"
+	  puts "[3] Display all contacts"
+	  puts "[4] Exit"
 	  print "Enter a number: "
 	end
 
-	def self.run_option(selection)
+	def self.execute_selection(selection)
 		case selection
 		when 1
-			add_contact
+			@contact_book.add_contact
 		when 2
- 			@contact_book.modify_contact()
+ 			@contact_book.find_contact
 		when 3
-			@contact_book.delete_contact(contact)
-		when 4
 			@contact_book.display_all_contacts
-		when 5
-			display_attribute
-		when 6
+ 		when 4
 			puts "\nGoodbye!"
 		else
 			puts "\nInvalid selection. Here are your options:"
 		end
- 	end
-
- 	def self.mandatory_get(prompt)
-		print prompt
-		input = gets.chomp
-		if input == ""
-			print "This field is mandatory. "
-			mandatory_get(prompt)
-		end
-		return input
-	end
-
- 	def self.add_contact
- 		first_name = mandatory_get("First name: ")
- 		last_name = mandatory_get("Last name: ")
- 		email = mandatory_get("Email: ")
- 		note = mandatory_get("Note: ")
-
- 		contact = Contact.new(first_name, last_name, email, note)
- 		@contact_book.add_contact_to_book(contact)
  	end
 end
 

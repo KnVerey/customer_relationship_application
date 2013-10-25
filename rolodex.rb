@@ -7,14 +7,33 @@ class Rolodex
 		@id_to_assign = 1000
 	end
 
-	def add_contact_to_book(contact)
-		contact.id =  @id_to_assign
-		@id_to_assign += 1		
-		@contact_array << contact
+	def mandatory_get(prompt) #needs to move
+		print prompt
+		input = gets.chomp
+		if input == ""
+			print "This field is mandatory. "
+			mandatory_get(prompt)
+		end
+		return input
 	end
 
-	def modify_contact
-		puts "Let's find the contact you want to modify."
+ 	def add_contact
+ 		first_name = mandatory_get("First name: ")
+ 		last_name = mandatory_get("Last name: ")
+ 		email = mandatory_get("Email: ")
+ 		note = mandatory_get("Note: ")
+
+ 		contact = Contact.new(first_name, last_name, email, note)
+ 		assign_id(contact)
+		@contact_array << contact
+ 	end
+
+	def assign_id(contact)
+		contact.id =  @id_to_assign
+		@id_to_assign += 1		
+	end
+
+	def find_contact
  		field = identify_search_field
 		return nil if field==5
 		query = identify_search_query
