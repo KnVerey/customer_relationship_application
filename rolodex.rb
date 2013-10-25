@@ -1,3 +1,6 @@
+require_relative "utilities"
+include Utilities
+
 class Rolodex
 	attr_accessor :name, :contact_array
 
@@ -7,21 +10,12 @@ class Rolodex
 		@id_to_assign = 1000
 	end
 
-	def mandatory_get(prompt) #needs to move
-		print prompt
-		input = gets.chomp
-		if input == ""
-			print "This field is mandatory. "
-			mandatory_get(prompt)
-		end
-		return input
-	end
-
  	def add_contact
- 		first_name = mandatory_get("First name: ")
- 		last_name = mandatory_get("Last name: ")
- 		email = mandatory_get("Email: ")
- 		note = mandatory_get("Note: ")
+ 		error_msg = "This field is mandatory."
+ 		first_name = mandatory_gets("First name: ", error_msg)
+ 		last_name = mandatory_gets("Last name: ", error_msg)
+ 		email = mandatory_gets("Email: ", error_msg)
+ 		note = mandatory_gets("Note: ", error_msg)
 
  		contact = Contact.new(first_name, last_name, email, note)
  		assign_id(contact)
