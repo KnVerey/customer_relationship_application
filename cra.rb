@@ -34,9 +34,11 @@ class CRA
 		when 1
 			@contact_book.add_contact
 		when 2
- 			@contact_book.find_contact
+ 			contact = @contact_book.find_contact
+ 			#@contact_book.modify_contact(contact)
+ 			#@contact_book.delete_contact(contact)
 		when 3
-			@contact_book.display_all_contacts
+			@contact_book.print_all
  		when 4
 			puts "\nGoodbye!"
 		else

@@ -49,11 +49,32 @@ class Rolodex
 		end
 		puts "\nHere are the results:"
 		matches.each {|contact| contact.print_contact}
-		select_match(matches)
+		results_action
 	end
 
-	def select_match(matches)
+	def print_action_options
+		puts "\nWhat do you want to do?"
+		puts "[1] Modify a record"
+		puts "[2] Delete a record"
+		puts "[3] Search again"
+		puts "[4] Return to main menu"
+	end
 
+	def results_action
+		print_action_options
+		input = gets.chomp.to_i
+		unless (1..4).include?(input)
+			print "\nThat is not a valid choice."
+			results_action
+		end
+		case input
+		when 1
+			modify_contact
+		when 2
+			delete_contact
+		when 3
+			find_contact
+		end
 	end
 
 	def identify_search_query
@@ -69,7 +90,7 @@ class Rolodex
  		print_search_options
  		input = gets.chomp.to_i
 		unless (1..5).include?(input)
-	 		print "That is not a valid choice."
+	 		print "\nThat is not a valid choice."
 	 		identify_search_field
 	 	end
 	 	return input
@@ -83,4 +104,9 @@ class Rolodex
 	  puts "[4] Note" 	
 	  puts "[5] Cancel"	
  	end
+
+ 	def print_all
+ 		@contact_array.each {|contact| contact.print_contact}
+ 	end
+
 end
