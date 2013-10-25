@@ -18,6 +18,23 @@ class Rolodex
  		field = identify_search_field
 		return nil if field==5
 		query = identify_search_query
+		search_rolodex(field, query)
+	end
+
+	def search_rolodex(field, query)
+		matches = @contact_array.map	do |contact|
+			case field
+			when 1 
+				contact if contact.first_name.include?(query)
+			when 2 
+				contact if contact.last_name.include?(query)
+			when 3 
+				contact if contact.email.include?(query)
+			when 4 
+				contact if contact.note.include?(query)
+			end
+		end
+		puts matches.to_s
 	end
 
 	def identify_search_query
@@ -26,6 +43,7 @@ class Rolodex
 		until input != ""
 			identify_search_query
 		end
+		return input
 	end
 
  	def identify_search_field
