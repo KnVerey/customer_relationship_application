@@ -9,10 +9,13 @@ class Contact
 	end
 
 	def print_contact
-		puts @first_name
-		puts @last_name
-		puts @email
-		puts @note
+		puts "--------------------------------------------"
+		puts "Contact No: " + @id.to_s
+		puts "--------------------------------------------"
+		puts @last_name.upcase + ", " + @first_name.upcase
+		puts "Email: " + @email
+		puts "Notes: " + @note
+		puts
 	end
 
 end
