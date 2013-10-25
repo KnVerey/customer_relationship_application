@@ -5,7 +5,7 @@ class CRA
 	def initialize
 		puts "\nWelcome to your CRM!".upcase
 		print "Please enter a name for your contact book: "
-		name = gets.chomps
+		name = gets.chomp
 		@contact_book = Rolodex.new(name)
 	end
 
@@ -47,18 +47,21 @@ class CRA
 			puts "\nInvalid selection. Here are your options:"
 		end
  	end
-	
-end
+
+	def mandatory_get(prompt)
+		print prompt
+		input = gets.chomp
+		if input == ""
+			print "This field is mandatory. "
+			mandatory_get(prompt)
+		end
+	end
 
  	def add_contact
- 		print "First name: "
- 		first_name = gets.chomp
- 		print "Last name: "
- 		last_name = gets.chomp
- 		print "Email: "
- 		email = gets.chomp
- 		print "Note: "
- 		note = gets.chomp
+ 		first_name = mandatory_get("First name: ")
+ 		last_name = mandatory_get("Last name: ")
+ 		email = mandatory_get("Email: ")
+ 		note = mandatory_get("Note: ")
 
  		contact = Contact.new(first_name, last_name, email, note)
  		@contact_book.add_contact_to_book(contact)
