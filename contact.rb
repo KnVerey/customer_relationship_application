@@ -8,4 +8,11 @@ class Contact
 		@note = note
 	end
 
+	def print_contact
+		puts @first_name
+		puts @last_name
+		puts @email
+		puts @note
+	end
+
 end

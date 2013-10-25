@@ -2,15 +2,16 @@ require_relative "contact"
 require_relative "rolodex"
 
 class CRA
-	def initialize
+	def self.run
 		puts "\e[H\e[2J"
 		puts "\nWelcome to your CRM!".upcase
 		print "Please enter a name for your contact book: "
 		name = gets.chomp
 		@contact_book = Rolodex.new(name)
+		main_menu
 	end
 
-	def main_menu
+	def self.main_menu
 		selection = 1
 		while selection != 6
 			print_main_menu
@@ -19,7 +20,7 @@ class CRA
 		end
 	end
 
-	def print_main_menu
+	def self.print_main_menu
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Modify an existing contact"
@@ -30,7 +31,7 @@ class CRA
 	  print "Enter a number: "
 	end
 
-	def run_option(selection)
+	def self.run_option(selection)
 		case selection
 		when 1
 			add_contact
@@ -49,7 +50,7 @@ class CRA
 		end
  	end
 
- 	def mandatory_get(prompt)
+ 	def self.mandatory_get(prompt)
 		print prompt
 		input = gets.chomp
 		if input == ""
@@ -59,7 +60,7 @@ class CRA
 		return input
 	end
 
- 	def add_contact
+ 	def self.add_contact
  		first_name = mandatory_get("First name: ")
  		last_name = mandatory_get("Last name: ")
  		email = mandatory_get("Email: ")
@@ -70,4 +71,4 @@ class CRA
  	end
 end
 
-CRA.new.main_menu
+CRA.run

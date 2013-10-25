@@ -34,7 +34,12 @@ class Rolodex
 				contact if contact.note.include?(query)
 			end
 		end
-		puts matches.to_s
+		matches.each {|contact| contact.print_contact}
+		select_match(matches)
+	end
+
+	def select_match(matches)
+
 	end
 
 	def identify_search_query
