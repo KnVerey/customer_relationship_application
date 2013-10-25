@@ -35,11 +35,8 @@ class CRA
 		when 1
 			add_contact
 		when 2
-			field = identify_search_field
-			puts field
- 			@contact_book.modify_contact unless field==5
+ 			@contact_book.modify_contact()
 		when 3
-			contact = identify_contact
 			@contact_book.delete_contact(contact)
 		when 4
 			@contact_book.display_all_contacts
@@ -50,36 +47,6 @@ class CRA
 		else
 			puts "\nInvalid selection. Here are your options:"
 		end
- 	end
-
- 	def identify_search_field
- 		print_search_options
- 		input = gets.chomp.to_i
-		unless (1..5).include?(input)
-	 		print "That is not a valid choice. Try again: "
-	 		identify_search_field
-	 	end
-	 	input=input_to_field(input) unless input==5
-	 	return input
- 	end
-
- 	def input_to_field(input)
- 		case input
- 		when 1; "first_name"
- 		when 2; "last_name"
- 		when 3; "email"
- 		when 4; "note"
- 		when 5; "abort"
- 		end
- 	end
- 	
- 	def print_search_options
-		puts "\nPlease choose the attribute you want to search for: "
-		puts "[1] First name"
-	  puts "[2] Last name"
-	  puts "[3] Email"
-	  puts "[4] Note" 	
-	  puts "[5] Cancel"	
  	end
 
  	def mandatory_get(prompt)
