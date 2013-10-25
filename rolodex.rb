@@ -12,4 +12,8 @@ class Rolodex
 		@id_to_assign += 1		
 		@contact_array << contact
 	end
+
+	def modify_contact
+		
+	end
 end
