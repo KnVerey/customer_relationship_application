@@ -42,11 +42,12 @@ class Rolodex
 
 	def interact_contacts
  		search = ContactSearch.new(@contact_array)
- 		if search.results.empty?
+ 		if search.results.nil?
+ 			return nil #Nil result means user cancelled search
+ 		elsif search.results.empty?
  			puts "Sorry, I didn't find anything."
- 			interact_contact
- 		end
- 		unless search.nil? 			
+ 			interact_contacts
+ 		else 			
  			propose_actions(search.results)
 		end
 	end
@@ -63,7 +64,7 @@ class Rolodex
 				delete_contact(contact)
 				break
 			when 3
-				#do nothing, continue loop
+				#do nothing, continue loop to next result
 			end
 		end
 		clear

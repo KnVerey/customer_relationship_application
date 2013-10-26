@@ -1,4 +1,8 @@
 module Utilities
+	def puts_hr
+		puts "--------------------------------------------"
+	end
+
 	def mandatory_gets(prompt,error_msg)
 		print prompt
 		input = gets.chomp

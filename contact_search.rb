@@ -1,3 +1,6 @@
+require_relative "utilities"
+include Utilities
+
 class ContactSearch
 	attr_reader :results
 
@@ -20,12 +23,14 @@ class ContactSearch
  	end
  	
  	def print_search_options
-		puts "\nPlease choose the attribute you want to search for: "
+		clear
+		puts "\nWhich attribute do you want to search for?"
 		puts "[1] First name"
 	  puts "[2] Last name"
 	  puts "[3] Email"
 	  puts "[4] Note" 	
-	  puts "[5] CANCEL"	
+	  puts "[5] CANCEL"
+	  print "\nCHOICE: "	
  	end
 
 	def identify_search_query
