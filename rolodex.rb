@@ -111,9 +111,68 @@ class Rolodex
 		print "\nCHOICE: "
 	end
 
-	def modify_contact(contact)
+	def modify_contact(contact) #Code very similar to search class
+		clear
+		contact.print_contact
+		field=identify_mod_field
+		clear
+		contact.print_contact
+		case field
+		when 1
+			puts "Modifying the first name. "
+			value = get_value(contact)
+			contact.first_name.replace value
+		when 2
+			puts "Modifying the last name. "
+			value = get_value(contact)
+			contact.last_name.replace value
+		when 3
+			puts "Modifying the email address. "
+			value = get_value(contact)
+			contact.email.replace value
+		when 4
+			puts "Modifying the note. "
+			value = get_value(contact)
+			contact.note.replace value
+		when 5
+			return nil
+		end
 
 	end
+
+	def get_value(contact)
+		print "Enter the new value: "
+		input = gets.chomp
+		if input == ""
+			clear
+			contact.print_contact
+			print "You can't make this field blank. "
+			input = get_value(contact)
+		end
+		return input
+	end
+
+	def identify_mod_field
+ 		print_field_options
+ 		input = gets.chomp.to_i
+		unless (1..5).include?(input)
+	 		clear
+	 		contact.print_contact
+	 		print "\nThat is not a valid choice."
+	 		input = identify_mod_field
+	 	end
+	 	return input
+ 	end
+ 	
+ 	def print_field_options
+		puts "\nWhich attribute do you want to modify?"
+		puts "[1] First name"
+	  puts "[2] Last name"
+	  puts "[3] Email"
+	  puts "[4] Note" 	
+	  puts "[5] CANCEL"
+	  print "\nCHOICE: "	
+ 	end
 
 	def validate_deletion(contact)
 		contact.print_contact
