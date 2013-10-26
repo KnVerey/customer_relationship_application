@@ -29,7 +29,18 @@ class CRA
 	end
 
 	def self.choose_rolodex
-		
+		puts "Please choose which contact book to open."
+		index = 0
+		@rolodex_list.each do |book|
+			puts "[#{index}]: #{book.name}"
+			index += 1
+		end
+		print "\nCHOICE: "
+		input = gets.chomp.to_i
+
+		unless (0..index-1).include? input
+			####
+		end
 	end
 
 	def self.main_menu
