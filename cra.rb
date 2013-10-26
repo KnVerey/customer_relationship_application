@@ -6,12 +6,30 @@ include Utilities
 class CRA
 	def self.run
 		clear			
-		puts_hr
-		puts "\n\t   Welcome to Rolodex contact management!\n\n".upcase
-		puts_hr	
-		name = mandatory_gets("Please enter a name for your contact book.\nNAME: ", "Naming the book is mandatory.")
-		@rolodex = Rolodex.new(name)
+		puts welcome_header
+		load_rolodex_list
+
+		if @rolodex_list.empty?
+			puts "You don't have any contact books yet."
+			add_new_rolodex
+		else
+			choose_rolodex
+		end
 		main_menu
+	end
+
+	def self.load_rolodex_list
+		@rolodex_list = []
+	end
+
+	def self.add_new_rolodex
+		name = mandatory_gets("Please enter a name for your new contact book.\nNAME: ", welcome_header + "\nNaming the book is mandatory.")
+		@rolodex = Rolodex.new(name)
+		@rolodex_list << @rolodex
+	end
+
+	def self.choose_rolodex
+		
 	end
 
 	def self.main_menu
@@ -25,9 +43,9 @@ class CRA
 
 	def self.print_main_menu
  		puts "\e[H\e[2J"
-		puts_hr
+		puts hr
 		puts @rolodex.name.upcase + ": Main Menu"
-		puts_hr
+		puts hr
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Find an existing contact (view, change or delete)"

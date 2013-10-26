@@ -1,6 +1,10 @@
 module Utilities
-	def puts_hr
-		puts "--------------------------------------------"
+	def hr
+		"--------------------------------------------"
+	end
+
+	def welcome_header
+		hr + "\n\n   Welcome to Rolodex contact management!\n\n".upcase + hr
 	end
 
 	def mandatory_gets(prompt,error_msg)
