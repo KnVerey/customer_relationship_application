@@ -58,7 +58,7 @@ class ContactSearch
 		until input != ""
 			clear
 			print "I can't search for nothing! "
-			get_query
+			input = get_query
 		end
 		return input
 	end
