@@ -64,11 +64,19 @@ class Rolodex
 			case input
 			when 1
 				modify_contact(contact)
-				break
+				return
 			when 2
-				index = identify_index(contact)
-				delete_contact(index)
-				break
+				clear
+				if validate_deletion(contact)
+					index = identify_index(contact)
+					delete_contact(index)
+				else
+					clear
+					puts "Deletion cancelled."
+					puts "Press enter to continue."
+					gets
+				end
+				return
 			when 3
 				#do nothing, continue loop to next result
 			end
@@ -85,7 +93,7 @@ class Rolodex
 		unless (1..3).include?(input)
 			clear
 			puts "\nThat is not a valid choice."
-			get_action_choice(contact)
+			input = get_action_choice(contact)
 		end
 		return input
 	end
@@ -100,6 +108,21 @@ class Rolodex
 
 	def modify_contact(contact)
 
+	end
+
+	def validate_deletion(contact)
+		contact.print_contact
+		puts "\nAre you sure you want to delete this contact?"
+		puts "[1] Yes"
+		puts "[2] No\n"
+		print "CHOICE: "
+		input = gets.chomp.to_i
+		unless (1..2).include?(input)
+			clear
+			puts "\n That is not a valid choice."
+			input = validate_deletion(contact)
+		end
+		input==1? true : false
 	end
 
 	def identify_index(desired_contact)
