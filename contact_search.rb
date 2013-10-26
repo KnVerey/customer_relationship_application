@@ -25,12 +25,12 @@ class ContactSearch
 	  puts "[2] Last name"
 	  puts "[3] Email"
 	  puts "[4] Note" 	
-	  puts "[5] Cancel"	
+	  puts "[5] CANCEL"	
  	end
 
 	def identify_search_query
 		print "Enter a search term: "
-		input=gets.chomp
+		input=gets.chomp.downcase
 		until input != ""
 			print "I can't search for nothing! "
 			identify_search_query
@@ -43,13 +43,13 @@ class ContactSearch
 		@contact_array.each	do |contact|
 			case field
 			when 1 
-				results<<contact if contact.first_name.include?(query)
+				results<<contact if contact.first_name.downcase.include?(query)
 			when 2 
-				results<<contact if contact.last_name.include?(query)
+				results<<contact if contact.last_name.downcase.include?(query)
 			when 3 
-				results<<contact if contact.email.include?(query)
+				results<<contact if contact.email.downcase.include?(query)
 			when 4 
-				results<<contact if contact.note.include?(query)
+				results<<contact if contact.note.downcase.include?(query)
 			end
 		end
 		return results

@@ -7,7 +7,7 @@ class CRA
 		puts "\nWelcome to your CRM!".upcase
 		print "Please enter a name for your contact book: "
 		name = gets.chomp
-		@contact_book = Rolodex.new(name)
+		@rolodex = Rolodex.new(name)
 		main_menu
 	end
 
@@ -26,17 +26,17 @@ class CRA
 	  puts "[2] Find an existing contact"
 	  puts "[3] Display all contacts"
 	  puts "[4] Exit"
-	  print "Enter a number: "
+	  print "\nCHOICE: "
 	end
 
 	def self.execute_selection(selection)
 		case selection
 		when 1
-			@contact_book.add_contact
+			@rolodex.add_contact
 		when 2
- 			contact = @contact_book.find_contact
+ 			@rolodex.interact_contacts
 		when 3
-			@contact_book.print_all
+			@rolodex.print_all
  		when 4
 			puts "\nGoodbye!"
 		else

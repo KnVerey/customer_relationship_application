@@ -23,22 +23,6 @@ class Rolodex
 		#END SAMPLE DATA#
 	end
 
-	def find_contact
- 		search = ContactSearch.new(@contact_array)
- 		if search.results.nil?
- 			puts "Sorry, I didn't find anything."
- 			find_contact
- 		end
- 		search.print_matches
-		results_action(search.results)
-	end
-
-	def print_matches
-		clear
-		puts "\nHere are the results:"
-		@results.each {|contact| contact.print_contact}
-	end
-
  	def add_contact
  		error_msg = "This field is mandatory."
  		first_name = mandatory_gets("First name: ", error_msg)
@@ -56,29 +40,55 @@ class Rolodex
 		@id_to_assign += 1		
 	end
 
-	def print_action_options
-		puts "\nWhat do you want to do?"
-		puts "[1] Modify a record"
-		puts "[2] Delete a record"
-		puts "[3] Search again"
-		puts "[4] Return to main menu"
+	def interact_contacts
+ 		search = ContactSearch.new(@contact_array)
+ 		if search.results.empty?
+ 			puts "Sorry, I didn't find anything."
+ 			interact_contact
+ 		end
+ 		unless search.nil? 			
+ 			propose_actions(search.results)
+		end
 	end
 
-	def results_action(matches)
+ 	def propose_actions(results)
+		results.each do |contact|
+			clear
+			input = get_action_choice(contact)
+			case input
+			when 1
+				modify_contact(contact)
+				break
+			when 2
+				delete_contact(contact)
+				break
+			when 3
+				#do nothing, continue loop
+			end
+		end
+		clear
+		puts "There are no more results. Press enter to continue."
+		gets
+	end
+
+	def get_action_choice(contact)
+		contact.print_contact
 		print_action_options
 		input = gets.chomp.to_i
-		unless (1..4).include?(input)
+		unless (1..3).include?(input)
+			clear
 			print "\nThat is not a valid choice."
-			results_action
+			get_action_choice
 		end
-		case input
-		when 1
-			modify_contact(matches)
-		when 2
-			delete_contact
-		when 3
-			find_contact
-		end
+		return input
+	end
+
+	def print_action_options
+		puts "\nWhat do you want to do?"
+		puts "[1] Modify this record"
+		puts "[2] Delete this record"
+		puts "[3] Next result"
+		print "\nCHOICE: "
 	end
 
 	def modify_contact(matches)
