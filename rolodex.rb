@@ -114,52 +114,56 @@ class Rolodex
 	def modify_contact(contact) #Code very similar to search class
 		clear
 		contact.print_contact
-		field=identify_mod_field
+		field=identify_mod_field(contact)
 		clear
 		contact.print_contact
 		case field
 		when 1
 			puts "Modifying the first name. "
-			value = get_value(contact)
+			value = get_value(contact, "first name")
 			contact.first_name.replace value
 		when 2
 			puts "Modifying the last name. "
-			value = get_value(contact)
+			value = get_value(contact, "last name")
 			contact.last_name.replace value
 		when 3
 			puts "Modifying the email address. "
-			value = get_value(contact)
+			value = get_value(contact, "email")
 			contact.email.replace value
 		when 4
 			puts "Modifying the note. "
-			value = get_value(contact)
+			value = get_value(contact, "note")
 			contact.note.replace value
 		when 5
+			clear
+			puts "Modification cancelled. Press enter to continue."
+			gets
 			return nil
 		end
-
+		puts "Record successfully modified! Press enter to continue."
+		gets
 	end
 
-	def get_value(contact)
+	def get_value(contact, field)
 		print "Enter the new value: "
 		input = gets.chomp
 		if input == ""
 			clear
 			contact.print_contact
-			print "You can't make this field blank. "
-			input = get_value(contact)
+			print "You can't make the #{field} field blank. "
+			input = get_value(contact, field)
 		end
 		return input
 	end
 
-	def identify_mod_field
+	def identify_mod_field(contact)
  		print_field_options
  		input = gets.chomp.to_i
 		unless (1..5).include?(input)
 	 		clear
 	 		contact.print_contact
 	 		print "\nThat is not a valid choice."
-	 		input = identify_mod_field
+	 		input = identify_mod_field(contact)
 	 	end
 	 	return input
  	end
