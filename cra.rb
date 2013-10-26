@@ -26,7 +26,7 @@ class CRA
 	end
 
 	def self.print_main_menu
-		clear
+ 		puts "\e[H\e[2J"
 		puts_hr
 		puts @rolodex.name.upcase + ": Main Menu"
 		puts_hr

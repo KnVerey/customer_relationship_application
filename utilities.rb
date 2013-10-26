@@ -1,3 +1,5 @@
+require_relative "rolodex"
+
 module Utilities
 	def puts_hr
 		puts "--------------------------------------------"

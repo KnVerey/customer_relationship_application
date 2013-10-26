@@ -8,7 +8,7 @@ class Rolodex
 	def initialize(name)
 		@name = name	
 		@contact_array = []
-		@id_to_assign = 1000
+		@id_to_assign = 1
 
 		#SAMPLE DATA#
 		contact = Contact.new("Mary", "Poppins","mp@gmail.com","nada")
@@ -24,6 +24,7 @@ class Rolodex
 	end
 
  	def add_contact
+ 		clear
  		error_msg = "This field is mandatory."
  		first_name = mandatory_gets("First name: ", error_msg)
  		last_name = mandatory_gets("Last name: ", error_msg)
@@ -33,6 +34,8 @@ class Rolodex
  		contact = Contact.new(first_name, last_name, email, note)
  		assign_id(contact)
 		@contact_array << contact
+		puts "\nContact added! Press enter to continue."
+		gets
  	end
 
 	def assign_id(contact)
@@ -78,8 +81,8 @@ class Rolodex
 		input = gets.chomp.to_i
 		unless (1..3).include?(input)
 			clear
-			print "\nThat is not a valid choice."
-			get_action_choice
+			puts "\nThat is not a valid choice."
+			get_action_choice(contact)
 		end
 		return input
 	end
@@ -118,6 +121,8 @@ class Rolodex
  	def print_all
  		clear
  		@contact_array.each {|contact| contact.print_contact}
+ 		puts "Press enter to continue."
+ 		gets
  	end
 
 end
