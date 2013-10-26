@@ -1,6 +1,7 @@
 require_relative "utilities"
 require_relative "contact_search"
 include Utilities
+include SampleData
 
 class Rolodex
 	attr_accessor :name, :contact_array
@@ -10,17 +11,7 @@ class Rolodex
 		@contact_array = []
 		@id_to_assign = 1
 
-		#SAMPLE DATA#
-		contact = Contact.new("Mary", "Poppins","mp@gmail.com","nada")
-		assign_id(contact)
-		@contact_array << contact
-		contact = Contact.new("Famous", "Person","vain@gmail.com","ok")
-		assign_id(contact)
-		@contact_array << contact
-		contact = Contact.new("Betty","Smith","bsmith@yahoo.ca","canada")
-		assign_id(contact)
-		@contact_array << contact
-		#END SAMPLE DATA#
+		import_sample_data
 	end
 
  	def add_contact

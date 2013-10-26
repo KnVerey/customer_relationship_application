@@ -8,7 +8,7 @@ class CRA
 		clear			
 		puts_hr
 		puts "\n\t   Welcome to your CRM!\n\n".upcase
-		puts_hr		
+		puts_hr	
 		name = mandatory_gets("Please enter a name for your contact book.\nNAME: ", "Naming the book is mandatory.")
 		@rolodex = Rolodex.new(name)
 		main_menu
