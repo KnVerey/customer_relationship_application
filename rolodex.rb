@@ -11,8 +11,8 @@ class Rolodex
 		@contact_array = []
 		@id_to_assign = 1
 
-		import_sample_data
-		sort_by_name
+		#COMMENT OUT LINE BELOW TO REMOVE SAMPLE DATA
+		import_sample_data; sort_by_name
 	end
 
  	def add_contact
@@ -20,7 +20,7 @@ class Rolodex
  		error_msg = "This field is mandatory."
  		first_name = mandatory_gets("First name: ", error_msg)
  		last_name = mandatory_gets("Last name: ", error_msg)
- 		email = mandatory_gets("Email: ", error_msg)
+ 		email = get_valid_email
  		note = mandatory_gets("Note: ", error_msg)
 
  		contact = Contact.new(first_name, last_name, email, note)
@@ -29,6 +29,14 @@ class Rolodex
 		sort_by_name
 		puts "\nContact added! Press enter to continue."
 		gets
+ 	end
+
+ 	def get_valid_email
+ 		email = mandatory_gets("Email: ", "This field is mandatory.")
+ 		return email if email.include?("@") && email.include?(".")
+ 		clear
+ 		puts "#{email} isn't a valid email address.\n"
+ 		email = get_valid_email
  	end
 
 	def assign_id(contact)
