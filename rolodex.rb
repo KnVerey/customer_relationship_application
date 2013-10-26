@@ -12,6 +12,7 @@ class Rolodex
 		@id_to_assign = 1
 
 		import_sample_data
+		sort_by_name
 	end
 
  	def add_contact
@@ -25,6 +26,7 @@ class Rolodex
  		contact = Contact.new(first_name, last_name, email, note)
  		assign_id(contact)
 		@contact_array << contact
+		sort_by_name
 		puts "\nContact added! Press enter to continue."
 		gets
  	end
@@ -32,6 +34,10 @@ class Rolodex
 	def assign_id(contact)
 		contact.id =  @id_to_assign
 		@id_to_assign += 1		
+	end
+
+	def sort_by_name
+		@contact_array.sort_by! {|contact| contact.last_name + contact.first_name}
 	end
 
 	def interact_contacts
