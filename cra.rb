@@ -38,14 +38,17 @@ class CRA
 		print "\nCHOICE: "
 		input = gets.chomp.to_i
 
-		unless (0..index-1).include? input
-			####
+		unless (0..(index-1)).include? input
+			clear
+	 		print "\nThat is not a valid choice."
+	 		input = choose_rolodex
 		end
+		@rolodex=@rolodex_list[input]
 	end
 
 	def self.main_menu
 		selection = 1
-		while selection != 4
+		while selection != 5
 			print_main_menu
 			selection = gets.chomp.to_i
 			execute_selection(selection)
@@ -61,7 +64,8 @@ class CRA
 		puts "[1] Add a new contact"
 	  puts "[2] Find an existing contact (view, change or delete)"
 	  puts "[3] Display all contacts"
-	  puts "[4] Exit"
+	  puts "[4] Load or create a different contact book"
+	  puts "[5] Exit"
 	  print "\nCHOICE: "
 	end
 
@@ -73,7 +77,10 @@ class CRA
  			@rolodex.interact_contacts
 		when 3
 			@rolodex.print_all
- 		when 4
+		when 4
+			clear
+			choose_rolodex
+ 		when 5
 			clear
 		else
 			puts "\nInvalid selection. Here are your options:"
