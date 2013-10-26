@@ -1,4 +1,5 @@
 require_relative "utilities"
+require_relative "contact_search"
 include Utilities
 
 class Rolodex
@@ -8,6 +9,34 @@ class Rolodex
 		@name = name	
 		@contact_array = []
 		@id_to_assign = 1000
+
+		#SAMPLE DATA#
+		contact = Contact.new("Mary", "Poppins","mp@gmail.com","nada")
+		assign_id(contact)
+		@contact_array << contact
+		contact = Contact.new("Famous", "Person","vain@gmail.com","ok")
+		assign_id(contact)
+		@contact_array << contact
+		contact = Contact.new("Betty","Smith","bsmith@yahoo.ca","canada")
+		assign_id(contact)
+		@contact_array << contact
+		#END SAMPLE DATA#
+	end
+
+	def find_contact
+ 		search = ContactSearch.new(@contact_array)
+ 		if search.results.nil?
+ 			puts "Sorry, I didn't find anything."
+ 			find_contact
+ 		end
+ 		search.print_matches
+		results_action(search.results)
+	end
+
+	def print_matches
+		clear
+		puts "\nHere are the results:"
+		@results.each {|contact| contact.print_contact}
 	end
 
  	def add_contact
@@ -27,31 +56,6 @@ class Rolodex
 		@id_to_assign += 1		
 	end
 
-	def find_contact
- 		field = identify_search_field
-		return nil if field==5
-		query = identify_search_query
-		search_rolodex(field, query)
-	end
-
-	def search_rolodex(field, query)
-		matches = @contact_array.map	do |contact|
-			case field
-			when 1 
-				contact if contact.first_name.include?(query)
-			when 2 
-				contact if contact.last_name.include?(query)
-			when 3 
-				contact if contact.email.include?(query)
-			when 4 
-				contact if contact.note.include?(query)
-			end
-		end
-		puts "\nHere are the results:"
-		matches.each {|contact| contact.print_contact}
-		results_action
-	end
-
 	def print_action_options
 		puts "\nWhat do you want to do?"
 		puts "[1] Modify a record"
@@ -60,7 +64,7 @@ class Rolodex
 		puts "[4] Return to main menu"
 	end
 
-	def results_action
+	def results_action(matches)
 		print_action_options
 		input = gets.chomp.to_i
 		unless (1..4).include?(input)
@@ -69,7 +73,7 @@ class Rolodex
 		end
 		case input
 		when 1
-			modify_contact
+			modify_contact(matches)
 		when 2
 			delete_contact
 		when 3
@@ -77,35 +81,31 @@ class Rolodex
 		end
 	end
 
-	def identify_search_query
-		print "Enter a search term: "
-		input=gets.chomp
-		until input != ""
-			identify_search_query
+	def modify_contact(matches)
+		clear
+		print_matches(matches)
+		print "Enter the ID number for the contact you want to modify:"
+		id = gets.chomp.to_i
+		until valid_id?(id)
+			modify_contact
 		end
-		return input
 	end
 
- 	def identify_search_field
- 		print_search_options
- 		input = gets.chomp.to_i
-		unless (1..5).include?(input)
-	 		print "\nThat is not a valid choice."
-	 		identify_search_field
-	 	end
-	 	return input
- 	end
- 	
- 	def print_search_options
-		puts "\nPlease choose the attribute you want to search for: "
-		puts "[1] First name"
-	  puts "[2] Last name"
-	  puts "[3] Email"
-	  puts "[4] Note" 	
-	  puts "[5] Cancel"	
- 	end
+	def valid_id?(id)
+		if id == 0 || id == ""
+			puts "That is not a valid ID number."
+			return false
+		end
+		@contact_array.each {|contact| return true if contact.id==id}
+	end
+
+	def delete_contact
+		
+	end
+
 
  	def print_all
+ 		clear
  		@contact_array.each {|contact| contact.print_contact}
  	end
 

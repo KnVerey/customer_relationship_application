@@ -35,8 +35,6 @@ class CRA
 			@contact_book.add_contact
 		when 2
  			contact = @contact_book.find_contact
- 			#@contact_book.modify_contact(contact)
- 			#@contact_book.delete_contact(contact)
 		when 3
 			@contact_book.print_all
  		when 4
