@@ -6,6 +6,7 @@ class ContactSearch
 
 	def initialize(contact_array)
  		@contact_array = contact_array
+ 		clear
  		field = identify_search_field
 		return nil if field==5
 		@results = search_rolodex(field)
@@ -15,14 +16,14 @@ class ContactSearch
  		print_search_options
  		input = gets.chomp.to_i
 		unless (1..5).include?(input)
+	 		clear
 	 		print "\nThat is not a valid choice."
-	 		identify_search_field
+	 		input = identify_search_field
 	 	end
 	 	return input
  	end
  	
  	def print_search_options
-		clear
 		puts "\nWhich attribute do you want to search for?"
 		puts "[1] First name"
 	  puts "[2] Last name"

@@ -32,7 +32,7 @@ class CRA
 		puts_hr
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
-	  puts "[2] Find an existing contact"
+	  puts "[2] Find an existing contact (view, change or delete)"
 	  puts "[3] Display all contacts"
 	  puts "[4] Exit"
 	  print "\nCHOICE: "

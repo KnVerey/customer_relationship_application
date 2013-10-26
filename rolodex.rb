@@ -49,7 +49,9 @@ class Rolodex
  			return nil #Nil result means user cancelled search
  		elsif search.results.empty?
  			puts "Sorry, I didn't find anything."
- 			interact_contacts
+ 			puts "Press enter to continue."
+ 			gets
+ 			return nil
  		else 			
  			propose_actions(search.results)
 		end
@@ -64,7 +66,8 @@ class Rolodex
 				modify_contact(contact)
 				break
 			when 2
-				delete_contact(contact)
+				index = identify_index(contact)
+				delete_contact(index)
 				break
 			when 3
 				#do nothing, continue loop to next result
@@ -95,26 +98,23 @@ class Rolodex
 		print "\nCHOICE: "
 	end
 
-	def modify_contact(matches)
+	def modify_contact(contact)
+
+	end
+
+	def identify_index(desired_contact)
+		index = 0
+		@contact_array.each do |contact|
+			return index if contact.id == desired_contact.id
+			index += 1
+		end
+	end
+
+	def delete_contact(index)
+		@contact_array.delete_at(index)		
 		clear
-		print_matches(matches)
-		print "Enter the ID number for the contact you want to modify:"
-		id = gets.chomp.to_i
-		until valid_id?(id)
-			modify_contact
-		end
-	end
-
-	def valid_id?(id)
-		if id == 0 || id == ""
-			puts "That is not a valid ID number."
-			return false
-		end
-		@contact_array.each {|contact| return true if contact.id==id}
-	end
-
-	def delete_contact
-		
+		puts "Contact deleted! Press enter to continue."
+		gets
 	end
 
 
