@@ -109,7 +109,12 @@ class Rolodex
 
 	def get_action_choice(contact, result_num, total_results)
 		contact.print_contact
-		print_action_options(result_num, total_results)
+		puts "\nWhat do you want to do?"
+		puts "[1] Modify this record"
+		puts "[2] Delete this record"
+		puts result_num==total_results ? "[3] Return to main menu" : "[3] Next result"
+		print "\nCHOICE: "
+		
 		input = gets.chomp.to_i
 		unless (1..3).include?(input)
 			clear
@@ -118,14 +123,6 @@ class Rolodex
 			input = get_action_choice(contact, result_num, total_results)
 		end
 		return input
-	end
-
-	def print_action_options(result_num, total_results)
-		puts "\nWhat do you want to do?"
-		puts "[1] Modify this record"
-		puts "[2] Delete this record"
-		puts result_num==total_results ? "[3] Return to main menu" : "[3] Next result"
-		print "\nCHOICE: "
 	end
 
 	def modify_contact(contact) #Code similar to search module
