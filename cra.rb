@@ -9,7 +9,7 @@ class CRA
 		clear			
 		puts welcome_header
 		@rolodex_list = []
-		load_saved_rolodexes if File::exists?("rolodex_list")
+		load_saved_rolodexes if File::exists?("./data/rolodex_list")
 
 		if @rolodex_list.empty?
 			puts "You don't have any contact books yet."
@@ -21,10 +21,10 @@ class CRA
 	end
 
 	def self.load_saved_rolodexes
-		file_list = IO.read("rolodex_list").split("\n")
+		file_list = IO.read("./data/rolodex_list").split("\n")
 		file_list.each do |filename|
 			 new_rolodex = Rolodex.new(filename)
-			 all_contacts = IO.read(filename).split("\n")
+			 all_contacts = IO.read("./data/"+filename).split("\n")
 			 id_counter=[]
 			 until all_contacts == []
 			 		id = all_contacts.slice!(0).to_i
@@ -39,7 +39,6 @@ class CRA
 			 @rolodex_list << new_rolodex
 			 new_rolodex.sort_by_name
 		end
-
 	end
 
 	def self.add_new_rolodex
@@ -126,7 +125,7 @@ class CRA
  		file_list=""
  		@rolodex_list.each do |rolodex|
  			file_list << "#{rolodex.name}\n"
- 			output = File.new(rolodex.name, "w")
+ 			output = File.new("./data/"+rolodex.name, "w")
  			rolodex.contact_array.each do |contact|
  				output.puts(contact.id.to_s + "\n")
  				output.puts(contact.first_name + "\n")
@@ -137,7 +136,7 @@ class CRA
  			output.close
  		end
 
- 		list = File.new("rolodex_list", "w")
+ 		list = File.new("./data/rolodex_list", "w")
  		list.puts(file_list)
  		list.close
  	end
