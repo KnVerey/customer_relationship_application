@@ -6,7 +6,6 @@ include Utilities
 include SampleData
 
 class CRA
-	attr_reader :rolodex
 
 	def self.run
 		clear			
@@ -30,8 +29,9 @@ class CRA
 
 	def self.add_new_rolodex
 		name = mandatory_gets("Please enter a name for your new contact book.\nNAME: ", (cra_header("Add new contact book") + "\nNaming the book is mandatory."))
-		@rolodex = Rolodex.new(name)
-		@rolodex_list << @rolodex
+		rolodex = Rolodex.new(name)
+		@rolodex_list << rolodex
+		open_rolodex(-1)
 	end
 
 	def self.choose_rolodex
@@ -46,7 +46,7 @@ class CRA
 		input = gets.chomp.to_i
 
 		if (1..(selector-1)).include? input
-			open_rolodex(selector-2) #i.e. index (started at 1 and went 1 too far)
+			open_rolodex(input-1) #i.e. index
 		elsif input == selector #i.e. add new
 				clear
 				puts cra_header("Add new contact book")
@@ -60,7 +60,7 @@ class CRA
 	end
 
 	def self.open_rolodex(index)
-		@rolodex = @rolodex_list[index]
+		@current_index = index
 	end
 
 	def self.main_menu
@@ -74,7 +74,7 @@ class CRA
 
 	def self.print_main_menu
  		clear
- 		puts cra_header(@rolodex.name.upcase + ": Main menu")
+ 		puts cra_header(@rolodex_list[@current_index].name.upcase + ": Main menu")
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Find an existing contact (view, change or delete)"
@@ -87,11 +87,11 @@ class CRA
 	def self.execute_selection(selection)
 		case selection
 		when 1
-			@rolodex.add_contact
+			@rolodex_list[@current_index].add_contact
 		when 2
- 			@rolodex.interact_contacts
+ 			@rolodex_list[@current_index].interact_contacts
 		when 3
-			@rolodex.print_all
+			@rolodex_list[@current_index].print_all
 		when 4
 			clear
 			puts cra_header("Choose contact book")
