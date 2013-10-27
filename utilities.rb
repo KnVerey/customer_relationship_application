@@ -1,9 +1,5 @@
 module Utilities
 
- 	def rolodex_header(message)
-		hr + "\n" + self.name.upcase + ": " + message + "\n" + hr
-	end
-
 	def hr
 		"--------------------------------------------"
 	end

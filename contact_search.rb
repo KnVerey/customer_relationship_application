@@ -1,15 +1,16 @@
 require_relative "utilities"
+#require_relative "rolodex"
 include Utilities
 
-class ContactSearch
-	attr_reader :results
+module ContactSearch
+	#attr_reader :results
 
-	def initialize(contact_array)
- 		@contact_array = contact_array
+	def search_contacts
  		clear
+ 		puts header("Search")
  		field = identify_search_field
 		return nil if field==5
-		@results = search_rolodex(field)
+		search_rolodex(field)
 	end
 
 	def identify_search_field
@@ -61,12 +62,6 @@ class ContactSearch
 			input = get_query
 		end
 		return input
-	end
-
-	def print_matches
-		clear
-		puts "\nHere are the results:"
-		@results.each {|contact| contact.print_contact}
 	end
 
 end

@@ -3,6 +3,7 @@ require_relative "contact_search"
 require_relative "sample_data"
 include Utilities
 include SampleData
+include ContactSearch
 
 class Rolodex
 	attr_accessor :name, :contact_array
@@ -16,9 +17,13 @@ class Rolodex
 		import_sample_data; sort_by_name
 	end
 
+	def header(message)
+		hr + "\n" + self.name.upcase + ": " + message + "\n" + hr
+	end
+
  	def add_contact
  		clear
- 		contact_header = rolodex_header("Add contact") #string
+ 		contact_header = header("Add contact") #string
  		puts contact_header
  		error_msg = "\n\nThis field is mandatory."
  		first_name = mandatory_gets("First name: ", (contact_header + error_msg))
@@ -31,17 +36,17 @@ class Rolodex
 		@contact_array << contact
 		sort_by_name
 		clear
-		puts rolodex_header("Add contact")
+		puts header("Add contact")
 		puts contact.print_contact
 		puts "Contact added! Press enter to continue."
 		gets
  	end
 
  	def get_valid_email(first_name, last_name, error_msg)
- 		email = mandatory_gets("Email: ", (rolodex_header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}"+ error_msg))
+ 		email = mandatory_gets("Email: ", (header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}"+ error_msg))
  		return email if email.include?("@") && email.include?(".")
  		clear
- 		puts rolodex_header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}\n"
+ 		puts header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}\n"
  		print "\n#{email} isn't a valid email address. "
  		email = get_valid_email(first_name,last_name,error_msg)
  	end
@@ -56,16 +61,18 @@ class Rolodex
 	end
 
 	def interact_contacts
- 		search = ContactSearch.new(@contact_array)
- 		if search.results.nil?
+ 		results = search_contacts
+ 		if results.nil?
  			return nil #Nil result means user cancelled search
- 		elsif search.results.empty?
+ 		elsif results.empty?
+ 			clear
+ 			puts header("Search")
  			puts "Sorry, I didn't find anything."
  			puts "Press enter to continue."
  			gets
  			return nil
  		else 			
- 			propose_actions(search.results)
+ 			propose_actions(results)
 		end
 	end
 
@@ -215,7 +222,7 @@ class Rolodex
 	def delete_contact(index)
 		@contact_array.delete_at(index)		
 		clear
-		puts rolodex_header("Delete contact")
+		puts header("Delete contact")
 		puts "Contact deleted! Press enter to continue."
 		gets
 	end
@@ -223,7 +230,7 @@ class Rolodex
 
  	def print_all
  		clear
- 		puts rolodex_header("All contacts".upcase)
+ 		puts header("All contacts".upcase)
  		@contact_array.each {|contact| contact.print_contact}
  		puts "Press enter to continue."
  		gets
