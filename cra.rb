@@ -4,6 +4,8 @@ require_relative "utilities"
 include Utilities
 
 class CRA
+	attr_reader :rolodex
+
 	def self.run
 		clear			
 		puts welcome_header
@@ -56,10 +58,8 @@ class CRA
 	end
 
 	def self.print_main_menu
- 		puts "\e[H\e[2J"
-		puts hr
-		puts @rolodex.name.upcase + ": Main Menu"
-		puts hr
+ 		clear
+ 		puts cra_menu_header("Main menu")
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Find an existing contact (view, change or delete)"
@@ -86,6 +86,8 @@ class CRA
 			puts "\nInvalid selection. Here are your options:"
 		end
  	end
+
+
 end
 
 CRA.run

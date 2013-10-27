@@ -1,10 +1,19 @@
 module Utilities
+
+ 	def rolodex_header(message)
+		hr + "\n" + self.name.upcase + ": " + message + "\n" + hr
+	end
+
 	def hr
 		"--------------------------------------------"
 	end
 
 	def welcome_header
 		hr + "\n\n   Welcome to Rolodex contact management!\n\n".upcase + hr
+	end
+
+	def cra_menu_header(message)
+		hr + "\n" + @rolodex.name.upcase + ": " + message + "\n" + hr
 	end
 
 	def mandatory_gets(prompt,error_msg)
@@ -20,24 +29,5 @@ module Utilities
 
 	def clear
  		puts "\e[H\e[2J"
-	end
-end
-
-module SampleData
-require_relative "contact"
-
-	def import_sample_data
-		contact = Contact.new("Mary", "Poppins","mp@gmail.com","American")
-		assign_id(contact)
-		@contact_array << contact
-		contact = Contact.new("Mary", "Lamb","ml@gmail.com","For two same names tests")
-		assign_id(contact)
-		@contact_array << contact
-		contact = Contact.new("Betty","Smith","bsmith@yahoo.ca","Canadian")
-		assign_id(contact)
-		@contact_array << contact
-		contact = Contact.new("Betsy","Smith","bsmith2@yahoo.ca","For name sort test")
-		assign_id(contact)
-		@contact_array << contact
 	end
 end

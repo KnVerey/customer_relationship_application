@@ -1,5 +1,6 @@
 require_relative "utilities"
 require_relative "contact_search"
+require_relative "sample_data"
 include Utilities
 include SampleData
 
@@ -17,6 +18,7 @@ class Rolodex
 
  	def add_contact
  		clear
+ 		puts rolodex_header("Add contact")
  		error_msg = "This field is mandatory."
  		first_name = mandatory_gets("First name: ", error_msg)
  		last_name = mandatory_gets("Last name: ", error_msg)
