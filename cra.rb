@@ -8,7 +8,8 @@ class CRA
 	def self.run
 		clear			
 		puts welcome_header
-		load_saved_rolodexes
+		@rolodex_list = []
+		load_saved_rolodexes if File::exists?("rolodex_list")
 
 		if @rolodex_list.empty?
 			puts "You don't have any contact books yet."
@@ -21,7 +22,6 @@ class CRA
 
 	def self.load_saved_rolodexes
 		file_list = IO.read("rolodex_list").split("\n")
-		@rolodex_list = []
 		file_list.each do |filename|
 			 new_rolodex = Rolodex.new(filename)
 			 all_contacts = IO.read(filename).split("\n")

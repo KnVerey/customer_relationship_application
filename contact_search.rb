@@ -35,8 +35,6 @@ module ContactSearch
 		puts header("Search")
 		query = get_query
 		results = []
-		puts @contact_array.to_s 
-		gets
 		@contact_array.each	do |contact|
 			case field
 			when 1
