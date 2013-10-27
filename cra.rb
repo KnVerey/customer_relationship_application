@@ -98,11 +98,24 @@ class CRA
 			choose_rolodex
  		when 5
 			clear
+			save_database
 		else
 			puts "\nInvalid selection. Here are your options:"
 		end
  	end
 
+ 	def self.save_database
+ 		file_list=""
+ 		@rolodex_list.each do |rolodex|
+ 			file_list << "#{rolodex.name}\n"
+ 			output = File.new(rolodex.name, "w")
+ 			output.close
+ 		end
+
+ 		list = File.new("rolodex_list", "w")
+ 		list.puts(file_list)
+ 		list.close
+ 	end
 
 end
 
