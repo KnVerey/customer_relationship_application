@@ -1,8 +1,6 @@
 require_relative "utilities"
 require_relative "contact_search"
-require_relative "sample_data"
 include Utilities
-include SampleData
 include ContactSearch
 
 class Rolodex
@@ -12,7 +10,6 @@ class Rolodex
 		@name = name	
 		@contact_array = []
 		@id_to_assign = 1
-
 	end
 
 	def header(message)

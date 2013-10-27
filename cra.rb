@@ -1,9 +1,7 @@
 require_relative "contact"
 require_relative "rolodex"
 require_relative "utilities"
-require_relative "sample_data"
 include Utilities
-include SampleData
 
 class CRA
 
@@ -131,8 +129,8 @@ class CRA
  			output = File.new(rolodex.name, "w")
  			rolodex.contact_array.each do |contact|
  				output.puts(contact.id.to_s + "\n")
- 				output.puts(contact.last_name + "\n")
  				output.puts(contact.first_name + "\n")
+ 				output.puts(contact.last_name + "\n")
  				output.puts(contact.email + "\n")
  				output.puts(contact.note + "\n")
  			end
