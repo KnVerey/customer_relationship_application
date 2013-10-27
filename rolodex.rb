@@ -79,6 +79,7 @@ class Rolodex
  	def propose_actions(results)
 		results.each do |contact|
 			clear
+			puts header("Search results")
 			input = get_action_choice(contact)
 			case input
 			when 1
@@ -86,11 +87,13 @@ class Rolodex
 				return
 			when 2
 				clear
+				puts header("Delete contact")
 				if validate_deletion(contact)
 					index = identify_index(contact)
 					delete_contact(index)
 				else
 					clear
+					puts header("Delete contact")
 					puts "Deletion cancelled."
 					puts "Press enter to continue."
 					gets
@@ -101,6 +104,7 @@ class Rolodex
 			end
 		end
 		clear
+		puts header("Search results")
 		puts "There are no more results. Press enter to continue."
 		gets
 	end
@@ -110,6 +114,7 @@ class Rolodex
 		print_action_options
 		input = gets.chomp.to_i
 		unless (1..3).include?(input)
+			puts header("Search results")
 			clear
 			puts "\nThat is not a valid choice."
 			input = get_action_choice(contact)
@@ -125,11 +130,13 @@ class Rolodex
 		print "\nCHOICE: "
 	end
 
-	def modify_contact(contact) #Code similar to search class
+	def modify_contact(contact) #Code similar to search module
 		clear
+		puts header("Modify contact")
 		contact.print_contact
 		field=identify_mod_field(contact)
 		clear
+		puts header("Modify contact")
 		contact.print_contact
 		case field
 		when 1
@@ -144,12 +151,13 @@ class Rolodex
 		when 4
 			value = get_value(contact, "note")
 			contact.note.replace value
-		when 5
+		when 5 #CHECK THIS OUT
 			clear
 			gets
 			return nil
 		end
 		clear
+		puts header("Modify contact")
 		puts contact.print_contact
 		puts "Record successfully modified! Press enter to continue."
 		gets
@@ -160,6 +168,7 @@ class Rolodex
 		input = gets.chomp
 		if input == ""
 			clear
+			puts header("Modify contact")
 			contact.print_contact
 			print "You can't make the #{field} field blank. "
 			input = get_value(contact, field)
@@ -167,6 +176,7 @@ class Rolodex
 		if field == "email"
 			return input if input.include?("@") && input.include?(".")
 			clear
+			puts header("Modify contact")
 			contact.print_contact
 			print "#{input} isn't a valid email address. "
 			input = get_value(contact, field)
@@ -179,6 +189,7 @@ class Rolodex
  		input = gets.chomp.to_i
 		unless (1..5).include?(input)
 	 		clear
+			puts header("Modify contact")
 	 		contact.print_contact
 	 		print "\nThat is not a valid choice."
 	 		input = identify_mod_field(contact)
@@ -200,11 +211,12 @@ class Rolodex
 		contact.print_contact
 		puts "\nAre you sure you want to delete this contact?"
 		puts "[1] Yes"
-		puts "[2] No\n"
+		puts "[2] Cancel\n"
 		print "CHOICE: "
 		input = gets.chomp.to_i
 		unless (1..2).include?(input)
 			clear
+			puts header("Delete contact")
 			puts "\n That is not a valid choice."
 			input = validate_deletion(contact)
 		end

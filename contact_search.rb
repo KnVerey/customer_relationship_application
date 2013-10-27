@@ -1,9 +1,4 @@
-require_relative "utilities"
-#require_relative "rolodex"
-include Utilities
-
 module ContactSearch
-	#attr_reader :results
 
 	def search_contacts
  		clear
@@ -18,6 +13,7 @@ module ContactSearch
  		input = gets.chomp.to_i
 		unless (1..5).include?(input)
 	 		clear
+	 		puts header("Search")
 	 		print "\nThat is not a valid choice."
 	 		input = identify_search_field
 	 	end
@@ -36,6 +32,7 @@ module ContactSearch
 
 	def search_rolodex(field)
 		clear
+		puts header("Search")
 		query = get_query
 		results = []
 		@contact_array.each	do |contact|
@@ -58,6 +55,7 @@ module ContactSearch
 		input=gets.chomp.downcase
 		until input != ""
 			clear
+			puts header("Search")
 			print "I can't search for nothing! "
 			input = get_query
 		end
