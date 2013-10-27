@@ -77,10 +77,13 @@ class Rolodex
 	end
 
  	def propose_actions(results)
+		counter = 0
 		results.each do |contact|
+			counter += 1
 			clear
-			puts header("Search results")
-			input = get_action_choice(contact)
+			puts header("Search results (Match #{counter} of #{results.length})")
+			
+			input = get_action_choice(contact, counter, results.length)
 			case input
 			when 1
 				modify_contact(contact)
@@ -94,39 +97,34 @@ class Rolodex
 				else
 					clear
 					puts header("Delete contact")
-					puts "Deletion cancelled."
-					puts "Press enter to continue."
+					puts "Deletion cancelled. Press enter to continue."
 					gets
 				end
 				return
 			when 3
-				#do nothing, continue loop to next result
+				#do nothing, continue loop to next result or exit
 			end
 		end
-		clear
-		puts header("Search results")
-		puts "There are no more results. Press enter to continue."
-		gets
 	end
 
-	def get_action_choice(contact)
+	def get_action_choice(contact, result_num, total_results)
 		contact.print_contact
-		print_action_options
+		print_action_options(result_num, total_results)
 		input = gets.chomp.to_i
 		unless (1..3).include?(input)
-			puts header("Search results")
 			clear
+			puts header("Search results (Match #{result_num} of #{total_results})")
 			puts "\nThat is not a valid choice."
-			input = get_action_choice(contact)
+			input = get_action_choice(contact, result_num, total_results)
 		end
 		return input
 	end
 
-	def print_action_options
+	def print_action_options(result_num, total_results)
 		puts "\nWhat do you want to do?"
 		puts "[1] Modify this record"
 		puts "[2] Delete this record"
-		puts "[3] Next result"
+		puts result_num==total_results ? "[3] Return to main menu" : "[3] Next result"
 		print "\nCHOICE: "
 	end
 
