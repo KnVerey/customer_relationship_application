@@ -17,8 +17,7 @@ class CRA
 			puts "You don't have any contact books yet."
 			add_new_rolodex
 		else
-			rolodex_index = choose_rolodex
-			@rolodex=@rolodex_list[rolodex_index]
+			choose_rolodex
 		end
 		main_menu
 	end
@@ -30,29 +29,38 @@ class CRA
 	end
 
 	def self.add_new_rolodex
-		name = mandatory_gets("Please enter a name for your new contact book.\nNAME: ", welcome_header + "\nNaming the book is mandatory.")
+		name = mandatory_gets("Please enter a name for your new contact book.\nNAME: ", (cra_header("Add new contact book") + "\nNaming the book is mandatory."))
 		@rolodex = Rolodex.new(name)
 		@rolodex_list << @rolodex
 	end
 
 	def self.choose_rolodex
 		puts "Please choose which contact book to open."
-		index = 1 #0 cannot be a valid choice (string.to_i)
+		selector = 1 #0 cannot be a valid choice (string.to_i)
 		@rolodex_list.each do |book|
-			puts "[#{index}]: #{book.name}"
-			index += 1
+			puts "[#{selector}]: #{book.name}"
+			selector += 1
 		end
+		puts "[#{selector}]: Add a new book" #incremented after last book
 		print "\nCHOICE: "
 		input = gets.chomp.to_i
 
-		if (1..(index-1)).include? input
-			return input-1
+		if (1..(selector-1)).include? input
+			open_rolodex(selector-2) #i.e. index (started at 1 and went 1 too far)
+		elsif input == selector #i.e. add new
+				clear
+				puts cra_header("Add new contact book")
+				add_new_rolodex
 		else
 			clear
 	 		puts cra_header("Choose contact book")
 	 		print "\nThat is not a valid choice. "
 	 		input = choose_rolodex
 		end
+	end
+
+	def self.open_rolodex(index)
+		@rolodex = @rolodex_list[index]
 	end
 
 	def self.main_menu
@@ -87,7 +95,7 @@ class CRA
 		when 4
 			clear
 			puts cra_header("Choose contact book")
- 			choose_rolodex
+			choose_rolodex
  		when 5
 			clear
 		else
