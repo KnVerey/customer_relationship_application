@@ -12,9 +12,7 @@ class Contact
 	end
 
 	def print_contact
-		puts "--------------------------------------------"
 		puts @last_name.upcase + ", " + @first_name.upcase
-		puts "--------------------------------------------"
 		#puts "Contact No: " + @id.to_s
 		puts "Email: " + @email
 		puts "Notes: " + @note

@@ -19,7 +19,7 @@ class Rolodex
  	def add_contact
  		clear
  		puts rolodex_header("Add contact")
- 		error_msg = "This field is mandatory."
+ 		error_msg = (rolodex_header("Add contact") + "\nThis field is mandatory.")
  		first_name = mandatory_gets("First name: ", error_msg)
  		last_name = mandatory_gets("Last name: ", error_msg)
  		email = get_valid_email
@@ -29,15 +29,19 @@ class Rolodex
  		assign_id(contact)
 		@contact_array << contact
 		sort_by_name
-		puts "\nContact added! Press enter to continue."
+		clear
+		puts rolodex_header("Add contact")
+		puts contact.print_contact
+		puts "Contact added! Press enter to continue."
 		gets
  	end
 
  	def get_valid_email
- 		email = mandatory_gets("Email: ", "This field is mandatory.")
+ 		email = mandatory_gets("Email: ", (rolodex_header("Add contact") + "\nThis field is mandatory."))
  		return email if email.include?("@") && email.include?(".")
  		clear
- 		puts "#{email} isn't a valid email address.\n"
+ 		puts rolodex_header("Add contact")
+ 		print "#{email} isn't a valid email address. "
  		email = get_valid_email
  	end
 
@@ -210,6 +214,7 @@ class Rolodex
 	def delete_contact(index)
 		@contact_array.delete_at(index)		
 		clear
+		puts rolodex_header("Delete contact")
 		puts "Contact deleted! Press enter to continue."
 		gets
 	end
@@ -217,6 +222,7 @@ class Rolodex
 
  	def print_all
  		clear
+ 		puts rolodex_header("All contacts".upcase)
  		@contact_array.each {|contact| contact.print_contact}
  		puts "Press enter to continue."
  		gets
