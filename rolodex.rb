@@ -6,20 +6,23 @@ include SampleData
 include ContactSearch
 
 class Rolodex
-	attr_accessor :name, :contact_array
+	attr_accessor :name, :contact_array, :id_to_assign
 
 	def initialize(name)
 		@name = name	
 		@contact_array = []
 		@id_to_assign = 1
 
-		#COMMENT OUT LINE BELOW TO REMOVE SAMPLE DATA
-		import_sample_data; sort_by_name
 	end
 
 	def header(message)
 		hr + "\n" + self.name.upcase + ": " + message + "\n" + hr
 	end
+
+ 	def insert_database_contact(id, first_name, last_name, email, note)
+ 		contact = Contact.new(id, first_name, last_name,email, note)
+ 		@contact_array << contact
+ 	end
 
  	def add_contact
  		clear
@@ -31,8 +34,9 @@ class Rolodex
  		email = get_valid_email(first_name,last_name, error_msg)
  		note = mandatory_gets("Note: ", (contact_header+"\nFirst name: #{first_name}\nLast name: #{last_name}\nEmail:#{email}"+ error_msg))
 
- 		contact = Contact.new(first_name, last_name, email, note)
- 		assign_id(contact)
+ 		id = @id_to_assign
+ 		@id_to_assign += 1
+ 		contact = Contact.new(id, first_name, last_name, email, note)
 		@contact_array << contact
 		sort_by_name
 		clear
@@ -50,11 +54,6 @@ class Rolodex
  		print "\n#{email} isn't a valid email address. "
  		email = get_valid_email(first_name,last_name,error_msg)
  	end
-
-	def assign_id(contact)
-		contact.id =  @id_to_assign
-		@id_to_assign += 1		
-	end
 
 	def sort_by_name
 		@contact_array.sort_by! {|contact| contact.last_name + contact.first_name}
@@ -114,7 +113,7 @@ class Rolodex
 		puts "[2] Delete this record"
 		puts result_num==total_results ? "[3] Return to main menu" : "[3] Next result"
 		print "\nCHOICE: "
-		
+
 		input = gets.chomp.to_i
 		unless (1..3).include?(input)
 			clear

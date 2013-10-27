@@ -10,7 +10,7 @@ class CRA
 	def self.run
 		clear			
 		puts welcome_header
-		load_rolodex_list
+		load_saved_rolodexes
 
 		if @rolodex_list.empty?
 			puts "You don't have any contact books yet."
@@ -21,10 +21,27 @@ class CRA
 		main_menu
 	end
 
-	def self.load_rolodex_list
+	def self.load_saved_rolodexes
+		file_list = IO.read("rolodex_list").split("\n")
 		@rolodex_list = []
-		#DELETE BELOW TO REMOVE SAMPLE BOOK
-		import_sample_books
+		file_list.each do |filename|
+			 new_rolodex = Rolodex.new(filename)
+			 all_contacts = IO.read(filename).split("\n")
+			 id_counter=[]
+			 until all_contacts == []
+			 		id = all_contacts.slice!(0).to_i
+			 		first_name = all_contacts.slice!(0)
+			 		last_name = all_contacts.slice!(0)
+			 		email = all_contacts.slice!(0)
+			 		note = all_contacts.slice!(0)
+			 		new_rolodex.insert_database_contact(id, first_name, last_name, email, note)
+			 		id_counter << id
+			 end
+			 new_rolodex.id_to_assign = (id_counter.sort.last + 1)
+			 @rolodex_list << new_rolodex
+			 new_rolodex.sort_by_name
+		end
+
 	end
 
 	def self.add_new_rolodex
@@ -88,17 +105,20 @@ class CRA
 		case selection
 		when 1
 			@rolodex_list[@current_index].add_contact
+			save_database
 		when 2
  			@rolodex_list[@current_index].interact_contacts
+ 			save_database
 		when 3
 			@rolodex_list[@current_index].print_all
 		when 4
+			save_database
 			clear
 			puts cra_header("Choose contact book")
 			choose_rolodex
+			save_database
  		when 5
 			clear
-			save_database
 		else
 			puts "\nInvalid selection. Here are your options:"
 		end
