@@ -151,8 +151,10 @@ class Rolodex
 		when 4
 			value = get_value(contact, "note")
 			contact.note.replace value
-		when 5 #CHECK THIS OUT
+		when 5
 			clear
+			puts header("Modify contact")
+			puts "Modification cancelled. Press enter to continue."
 			gets
 			return nil
 		end
