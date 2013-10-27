@@ -15,6 +15,7 @@ class CRA
 			puts "You don't have any contact books yet."
 			add_new_rolodex
 		else
+			puts cra_header("Choose contact book")
 			choose_rolodex
 		end
 		main_menu
@@ -32,7 +33,7 @@ class CRA
 
 	def self.choose_rolodex
 		puts "Please choose which contact book to open."
-		index = 0
+		index = 1 #0 cannot be a valid choice (string.to_i)
 		@rolodex_list.each do |book|
 			puts "[#{index}]: #{book.name}"
 			index += 1
@@ -40,12 +41,13 @@ class CRA
 		print "\nCHOICE: "
 		input = gets.chomp.to_i
 
-		unless (0..(index-1)).include? input
+		unless (1..(index-1)).include? input
 			clear
+	 		puts cra_header("Choose contact book")
 	 		print "\nThat is not a valid choice."
 	 		input = choose_rolodex
 		end
-		@rolodex=@rolodex_list[input]
+		@rolodex=@rolodex_list[(input-1)]
 	end
 
 	def self.main_menu
@@ -59,7 +61,7 @@ class CRA
 
 	def self.print_main_menu
  		clear
- 		puts cra_menu_header("Main menu")
+ 		puts cra_header(@rolodex.name.upcase + ": Main menu")
 		puts "\nPlease select one of the following options:"
 		puts "[1] Add a new contact"
 	  puts "[2] Find an existing contact (view, change or delete)"
@@ -79,7 +81,8 @@ class CRA
 			@rolodex.print_all
 		when 4
 			clear
-			choose_rolodex
+			puts cra_header("Choose contact book")
+ 			choose_rolodex
  		when 5
 			clear
 		else

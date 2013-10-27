@@ -12,8 +12,8 @@ module Utilities
 		hr + "\n\n   Welcome to Rolodex contact management!\n\n".upcase + hr
 	end
 
-	def cra_menu_header(message)
-		hr + "\n" + @rolodex.name.upcase + ": " + message + "\n" + hr
+	def cra_header(message)
+		hr + "\n" + message + "\n" + hr
 	end
 
 	def mandatory_gets(prompt,error_msg)
