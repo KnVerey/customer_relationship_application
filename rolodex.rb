@@ -18,12 +18,13 @@ class Rolodex
 
  	def add_contact
  		clear
- 		puts rolodex_header("Add contact")
- 		error_msg = (rolodex_header("Add contact") + "\nThis field is mandatory.")
- 		first_name = mandatory_gets("First name: ", error_msg)
- 		last_name = mandatory_gets("Last name: ", error_msg)
- 		email = get_valid_email
- 		note = mandatory_gets("Note: ", error_msg)
+ 		contact_header = rolodex_header("Add contact") #string
+ 		puts contact_header
+ 		error_msg = "\n\nThis field is mandatory."
+ 		first_name = mandatory_gets("First name: ", (contact_header + error_msg))
+ 		last_name = mandatory_gets("Last name: ", (contact_header+"\nFirst name: #{first_name}"+ error_msg))
+ 		email = get_valid_email(first_name,last_name, error_msg)
+ 		note = mandatory_gets("Note: ", (contact_header+"\nFirst name: #{first_name}\nLast name: #{last_name}\nEmail:#{email}"+ error_msg))
 
  		contact = Contact.new(first_name, last_name, email, note)
  		assign_id(contact)
@@ -36,13 +37,13 @@ class Rolodex
 		gets
  	end
 
- 	def get_valid_email
- 		email = mandatory_gets("Email: ", (rolodex_header("Add contact") + "\nThis field is mandatory."))
+ 	def get_valid_email(first_name, last_name, error_msg)
+ 		email = mandatory_gets("Email: ", (rolodex_header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}"+ error_msg))
  		return email if email.include?("@") && email.include?(".")
  		clear
- 		puts rolodex_header("Add contact")
- 		print "#{email} isn't a valid email address. "
- 		email = get_valid_email
+ 		puts rolodex_header("Add contact")+"\nFirst name: #{first_name}\nLast name: #{last_name}\n"
+ 		print "\n#{email} isn't a valid email address. "
+ 		email = get_valid_email(first_name,last_name,error_msg)
  	end
 
 	def assign_id(contact)
