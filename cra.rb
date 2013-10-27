@@ -109,6 +109,13 @@ class CRA
  		@rolodex_list.each do |rolodex|
  			file_list << "#{rolodex.name}\n"
  			output = File.new(rolodex.name, "w")
+ 			rolodex.contact_array.each do |contact|
+ 				output.puts(contact.id.to_s + "\n")
+ 				output.puts(contact.last_name + "\n")
+ 				output.puts(contact.first_name + "\n")
+ 				output.puts(contact.email + "\n")
+ 				output.puts(contact.note + "\n")
+ 			end
  			output.close
  		end
 
