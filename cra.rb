@@ -1,7 +1,9 @@
 require_relative "contact"
 require_relative "rolodex"
 require_relative "utilities"
+require_relative "sample_data"
 include Utilities
+include SampleData
 
 class CRA
 	attr_reader :rolodex
@@ -15,14 +17,16 @@ class CRA
 			puts "You don't have any contact books yet."
 			add_new_rolodex
 		else
-			puts cra_header("Choose contact book")
-			choose_rolodex
+			rolodex_index = choose_rolodex
+			@rolodex=@rolodex_list[rolodex_index]
 		end
 		main_menu
 	end
 
 	def self.load_rolodex_list
 		@rolodex_list = []
+		#DELETE BELOW TO REMOVE SAMPLE BOOK
+		import_sample_books
 	end
 
 	def self.add_new_rolodex
@@ -41,13 +45,14 @@ class CRA
 		print "\nCHOICE: "
 		input = gets.chomp.to_i
 
-		unless (1..(index-1)).include? input
+		if (1..(index-1)).include? input
+			return input-1
+		else
 			clear
 	 		puts cra_header("Choose contact book")
-	 		print "\nThat is not a valid choice."
+	 		print "\nThat is not a valid choice. "
 	 		input = choose_rolodex
 		end
-		@rolodex=@rolodex_list[(input-1)]
 	end
 
 	def self.main_menu

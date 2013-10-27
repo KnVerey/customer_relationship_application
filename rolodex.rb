@@ -239,7 +239,6 @@ class Rolodex
 		gets
 	end
 
-
  	def print_all
  		clear
  		puts header("All contacts".upcase)
