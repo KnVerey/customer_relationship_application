@@ -53,6 +53,7 @@ class CRA
 		rolodex = Rolodex.new(name)
 		@rolodex_list << rolodex
 		open_rolodex(-1)
+		save_database
 	end
 
 	def self.choose_rolodex
@@ -111,6 +112,7 @@ class CRA
 			print "\nNEW NAME: "
 			new_name = gets.chomp
 			@rolodex_list[input-1].name = new_name
+			save_database
 			clear
 			puts cra_header("Rename a contact book")
 			puts "Renaming complete. Press enter to continue."
@@ -150,6 +152,7 @@ class CRA
 
 			if really_delete_book?(input-1)
 				@rolodex_list.delete_at(input-1) #i.e. index
+				save_database
 				clear
 				puts cra_header("Delete a contact book")
 				puts "Contact book successfully deleted. Press enter to continue."
@@ -230,11 +233,9 @@ end
 		when 3
 			@rolodex_list[@current_index].print_all
 		when 4
-			save_database
 			clear
 			puts cra_header("Choose contact book")
 			choose_rolodex
-			save_database
  		when 5
 			clear
 		else
