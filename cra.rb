@@ -61,7 +61,8 @@ class CRA
 		end
 		puts
 		puts "[#{selector}]: Add a new book" #incremented after last book
-		puts "[#{selector+1}]: Delete an existing book"
+		puts "[#{selector+1}]: Rename an existing book"
+		puts "[#{selector+2}]: Delete an existing book"
 		print "\nCHOICE: "
 		input = gets.chomp.to_i
 
@@ -71,7 +72,12 @@ class CRA
 			clear
 			puts cra_header("Add new contact book")
 			add_new_rolodex
-		elsif input==(selector+1) #i.e. delete
+		elsif input==(selector+1) #i.e. rename
+			clear
+			puts cra_header("Rename a contact book")
+			puts "Which book do you want to rename?"
+			rename_rolodex
+		elsif input==(selector+2) #i.e. delete
 			clear
 			puts cra_header("Delete a contact book")
 			puts "Which book do you want to delete?"
@@ -81,6 +87,47 @@ class CRA
 	 		puts cra_header("Choose contact book")
 	 		print "\nThat is not a valid choice. "
 	 		input = choose_rolodex
+		end
+	end
+
+	def self.rename_rolodex
+		selector = 1 #0 cannot be a valid choice (string.to_i)
+		@rolodex_list.each do |book|
+			puts "[#{selector}]: #{book.name}"
+			selector += 1
+		end
+		puts "[#{selector}]: CANCEL"
+		print "\nCHOICE: "
+		input = gets.chomp.to_i
+
+		if (1..(selector-1)).include? input #within indices
+			clear
+			puts cra_header("Rename a contact book")
+			old_name = @rolodex_list[input-1].name
+			puts "What would you like to rename #{old_name}?"
+			print "\nNEW NAME: "
+			new_name = gets.chomp
+			@rolodex_list[input-1].name = new_name
+			clear
+			puts cra_header("Rename a contact book")
+			puts "Renaming complete. Press enter to continue."
+			gets
+			clear
+			puts cra_header("Choose contact book")
+			choose_rolodex		
+		elsif selector == input #i.e. cancel
+			clear
+			puts cra_header("Rename a contact book")
+			puts "Renaming cancelled. Press enter to continue."
+			gets
+			clear
+			puts cra_header("Choose contact book")
+			choose_rolodex
+		else #not a valid option
+			clear
+			puts cra_header("Rename a contact book")
+			puts "\n That is not a valid choice. "
+			input = rename_rolodex	
 		end
 	end
 
