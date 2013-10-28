@@ -9,6 +9,9 @@ class CRA
 		clear			
 		puts welcome_header
 		@rolodex_list = []
+
+		Dir.mkdir("data") unless Dir::exists?("./data")
+
 		load_saved_rolodexes if File::exists?("./data/rolodex_list")
 
 		if @rolodex_list.empty?
