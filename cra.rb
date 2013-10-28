@@ -95,14 +95,27 @@ class CRA
 		input = gets.chomp.to_i
 
 		if (1..(selector-1)).include? input #within indices
-			@rolodex_list.delete_at(input-1) #i.e. index
 			clear
 			puts cra_header("Delete a contact book")
-			puts "Contact book successfully deleted. Press enter to continue."
-			gets
-			clear
-			puts cra_header("Choose contact book")
-			choose_rolodex
+
+			if really_delete_book?(input-1)
+				@rolodex_list.delete_at(input-1) #i.e. index
+				clear
+				puts cra_header("Delete a contact book")
+				puts "Contact book successfully deleted. Press enter to continue."
+				gets
+				clear
+				puts cra_header("Choose contact book")
+				choose_rolodex
+			else
+				clear
+				puts cra_header("Delete a contact book")
+				puts "Deletion cancelled. Press enter to continue."
+				gets
+				clear
+				puts cra_header("Choose contact book")
+				choose_rolodex
+			end
 		elsif selector==input #i.e. cancel
 			clear
 			puts cra_header("Choose contact book")
@@ -114,6 +127,22 @@ class CRA
 			input = delete_a_book
 		end
 	end
+
+def self.really_delete_book?(book_index)
+		name = @rolodex_list[book_index].name
+		puts "\nAre you sure you want to delete #{name}?"
+		puts "[1] Yes"
+		puts "[2] Cancel\n"
+		print "CHOICE: "
+		input = gets.chomp.to_i
+		unless (1..2).include?(input)
+			clear
+			puts header("Delete a contact book")
+			puts "\n That is not a valid choice."
+			input = really_delete_book?(book_index)
+		end
+		input==1? true : false
+end
 
 	def self.open_rolodex(index)
 		@current_index = index
